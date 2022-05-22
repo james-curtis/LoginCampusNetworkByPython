@@ -1,8 +1,12 @@
 # 某学校图书馆网络登录的python3脚本
 
+### 依赖
+
+执行pip install requests
 
 
-使用方法： 
+
+ ### 使用方法： 
 
 - 第一种方法：
   - python3 main.py 你的学号 你身份证后六位 
