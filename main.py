@@ -20,12 +20,12 @@ if __name__ == '__main__':
     # 取得mac
     matchR = re.search('mac=(.*?)&', r.text, re.I)
     if matchR is None:
-        exit(11)
+        exit("mac error")
     mac = matchR.group(1)
     # 获取ip
     matchR = re.search('wlanuserip=(.*?)&', r.text, re.I)
     if matchR is None:
-        exit(11)
+        exit("wlanuserip error")
     ip = matchR.group(1)
 
     refererTuple = f"http://59.71.0.49/portal.do?wlanuserip={ip}&wlanacname=amnon2&mac={mac}&vlan=0&rand=6289b972",
