@@ -1,3 +1,4 @@
+import random
 import re
 import requests
 import sys
@@ -8,8 +9,10 @@ import sys
 第二种方法：先修改第11行和第12行的代码，然后直接运行python3 main.py
 '''
 if __name__ == '__main__':
-    username = "学号"
-    passwd = "身份证后六位"
+    userList = [
+        ["学号", "身份证后六位"]
+    ]
+    [username, passwd] = userList[random.randint(0, len(userList) - 1)]
 
     if len(sys.argv) == 3:
         username = sys.argv[1]
