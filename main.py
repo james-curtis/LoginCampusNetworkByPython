@@ -1,34 +1,29 @@
 import random
 import re
-import requests
-import sys
+import json
+import tools
 
 '''
 使用方法：
 第一种方法：python3 main.py 你的学号 你身份证后六位
 第二种方法：先修改第11行和第12行的代码，然后直接运行python3 main.py
 '''
-if __name__ == '__main__':
-    userList = [
-        ["学号", "身份证后六位"]
-    ]
-    [username, passwd] = userList[random.randint(0, len(userList) - 1)]
 
-    if len(sys.argv) == 3:
-        username = sys.argv[1]
-        passwd = sys.argv[2]
 
+def rawLogin(req, username, passwd):
     extPortal = "http://1.1.1.1:8000/ext_portal.magi?url=http://1.1.1.1/&radnum=664343&a.magi"
-    r = requests.get(extPortal)
+    r = req.get(extPortal)
     # 取得mac
     matchR = re.search('mac=(.*?)&', r.text, re.I)
     if matchR is None:
-        exit("mac error")
+        print("mac error")
+        return True
     mac = matchR.group(1)
     # 获取ip
     matchR = re.search('wlanuserip=(.*?)&', r.text, re.I)
     if matchR is None:
-        exit("wlanuserip error")
+        print("wlanuserip error")
+        return True
     ip = matchR.group(1)
 
     refererTuple = f"http://59.71.0.49/portal.do?wlanuserip={ip}&wlanacname=amnon2&mac={mac}&vlan=0&rand=6289b972",
@@ -40,7 +35,7 @@ if __name__ == '__main__':
         "Content-Type": "application/x-www-form-urlencoded",
     }
 
-    r = requests.post("http://59.71.0.49/portalAuthAction.do", data={
+    r = req.post("http://59.71.0.49/portalAuthAction.do", data={
         "wlanuserip": ip,
         "wlanacname": "amnon2",
         "chal_id": "",
@@ -105,6 +100,40 @@ if __name__ == '__main__':
     }, headers=commonHeaders)
 
     if r.text.find("成功登陆") != -1:
-        print("success")
-        exit(0)
-    print(r.text)
+        print('success')
+        return True
+    print(tools.remove_blank_line(r.text))
+    return False
+
+
+def login(username, passwd, net: str = None):
+    req = lambda s: rawLogin(s, username, passwd)
+    tools.prepare_request(sip=net, req_fun=req)
+
+
+'''
+获取帮助信息
+python main.py -h
+'''
+if __name__ == '__main__':
+    args = tools.get_args()
+
+    userList = []
+    with open('./user.json', 'r') as f:
+        userList += json.loads(f.read())
+    random.shuffle(userList)
+
+    nics = tools.get_nics(args)
+    if len(nics) != 0:
+        users = userList[:len(nics)]
+        print(f'nics: {nics}')
+        for idx, net in enumerate(nics):
+            print(f'No.{idx}>>>>>>>>>>{net}')
+            [username, passwd] = users[idx]
+            login(username, passwd, net)
+    else:
+        [username, passwd] = userList[random.randint(0, len(userList) - 1)]
+        if args.user is not None and args.pwd is not None:
+            username = args.user
+            passwd = args.pwd
+        login(username, passwd)
