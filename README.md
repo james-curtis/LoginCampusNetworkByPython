@@ -2,12 +2,12 @@
 
 ## 安装依赖
 
+先接入路由器，用其他机器登录校园网（或者直接在shell中使用curl登录）
+
 ### 1. istoreOS shell中执行
 ```bash
+opkg update
 opkg install python3 python3-pip python3-dev gcc 
-
-pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-pip install -r requirements.txt
 ```
 
 ### 2. 在面板的iStore商店中安装 `多线多播` (搜索mwan也行)
@@ -40,7 +40,7 @@ pip install -r requirements.txt
 
 ### 2. 配置多线多拨
 
-进入 网络》多线多拨 按照下图配置后保存应用
+进入 网络》多线多拨 **参考**下图配置后保存应用
 ![img.png](docs/img.png)
 
 检测一下macvlan是否生效，进入 网络》接口》设备，重点检查macvlan开头的设备有没有mac
@@ -88,7 +88,14 @@ mkdir /root/login
 ```
 
 上传项目文件到 `/root/login`
-![img_6.png](docs/img_6.png)
+![img.png](docs/img9.png)
+
+安装依赖
+```shell
+cd /root/login
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+pip install -r requirements.txt
+```
 
 使用 `main.py` 批量登录校园网
 
@@ -123,6 +130,9 @@ python main.py -p 10.0.41.
 > A: 咱这里的校园网就是这样的，第一次登录可以获取到mac，
 > 
 > 如果已经登录过了，那么就不会返回mac，并且会跳转到其他页面，所以也就出现了 `mac error`
+> 
+> <<<<<<提示>>>>>>
+> 使用 `python test -p 10.0.41.` 可以在不登录的情况下测试接口连通性，返回结果是公网ip
 
 ![img_8.png](docs/img_8.png)
 
@@ -140,6 +150,7 @@ python main.py -p 10.0.41.
 
 用迅雷下载个东西试试
 ![img_11.png](docs/img_11.png)
+![img.png](docs/img11.png)
 
 ### 6. 计划任务
 
