@@ -45,7 +45,7 @@ opkg install python3 python3-pip python3-dev gcc
 
 检测一下macvlan是否生效，进入 网络》接口》设备，重点检查macvlan开头的设备有没有mac
 
-> 如果没有mac的话重新执行上面步骤，多试几次
+> 如果没有mac的话重新执行上面步骤，多试几次。或者重启一下
 > 
 > 一定**不要**勾选 `绑定物理接口` 
 
