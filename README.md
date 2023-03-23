@@ -53,7 +53,7 @@ opkg install python3 python3-pip python3-dev gcc
 
 链接shell
 
-下载文件 `/etc/network/config`
+下载文件 `/etc/config/network`
 
 在vscdoe里面应用下面两条替换
 
