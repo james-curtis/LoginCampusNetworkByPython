@@ -164,6 +164,8 @@ chmod 755 /root/login/*
 
 在 系统》计划任务 添加如下命令
 
+> `login.sh` 中的登录命令需要修改为你自己的
+
 ```shell
 */1 * * * *    sh /root/login/login.sh
 ```
