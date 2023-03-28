@@ -53,14 +53,25 @@ opkg install python3 python3-pip python3-dev gcc
 
 链接shell
 
-下载文件 `/etc/config/network`
+找到文件 `/etc/config/network`
 
-在vscdoe里面应用下面两条替换
+在vscdoe里面应用下面两条替换或者使用命令替换
 
+> 命令：
+> 
+> `sed -i "s/option proto 'pppoe'/option proto 'dhcp'/g" /etc/config/network`
+> 
+> `sed -i "s/option username/option metric/g" /etc/config/network`
+> 
+> vscode替换：
+> 
 > 搜索 `option proto 'pppoe'`
+> 
 > 替换 `option proto 'dhcp'`
-
+> 
+>
 > 搜索 `option username`
+> 
 > 替换 `option metric`
 
 替换前如下图
