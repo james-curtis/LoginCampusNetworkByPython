@@ -26,17 +26,31 @@ opkg install python3 python3-pip python3-dev gcc
 
 ## 多线多拨使用方法
 
+### 0. 上传文件安装依赖
+
+进入shell
+
+创建文件夹 
+```shell
+mkdir /root/login
+```
+
+上传项目文件到 `/root/login`
+
+安装依赖
+```shell
+cd /root/login
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+pip install -r requirements.txt
+```
+
 ### 1. 重新配置负载均衡
 
 进入 网络》负载均衡
 
-删除 接口、成员、策略、规则 下面的所有东西
+删除 接口、成员 下面的所有东西
 
-在策略tab下，添加一条lb策略，填写内容如下
-![img_2.png](docs/img_2.png)
-
-在规则tab下，添加一条default规则，填写内容如下
-![img_1.png](docs/img_1.png)
+在策略tab下，删除除了 `balanced` 之外的所有条目
 
 ### 2. 配置多线多拨
 
@@ -91,23 +105,6 @@ opkg install python3 python3-pip python3-dev gcc
 
 ### 3. 开始多拨
 
-进入shell
-
-创建文件夹 
-```shell
-mkdir /root/login
-```
-
-上传项目文件到 `/root/login`
-![img.png](docs/img9.png)
-
-安装依赖
-```shell
-cd /root/login
-pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-pip install -r requirements.txt
-```
-
 使用 `main.py` 批量登录校园网
 
 使用方法
@@ -151,8 +148,9 @@ python main.py -p 10.0.41.
 
 进入面板，找到 网络》负载均衡》策略
 
-编辑之前添加的lb策略，把所有 `vwan` 和 `wan` 开头的接口都添加进来，然后保存应用
-![img_9.png](docs/img_9.png)
+检查成员和策略是否都自动添加上了
+![16989469861151698946985747.png](https://raw.githubusercontent.com/james-curtis/blog-img/img/img/16989469861151698946985747.png)
+![16989469921231698946991571.png](https://raw.githubusercontent.com/james-curtis/blog-img/img/img/16989469921231698946991571.png)
 
 进入 状态》负载均衡，检查一下在线接口
 ![img_10.png](docs/img_10.png)
